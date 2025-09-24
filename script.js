@@ -44,39 +44,43 @@ function getAudioContext() {
 
 function playBearSound() {
   const ctx = getAudioContext();
+  const now = ctx.currentTime;
 
-  ctx.resume().then(() => {
-    const now = ctx.currentTime;
+  const carrier = ctx.createOscillator();
+  carrier.type = 'sawtooth';
+  carrier.frequency.setValueAtTime(110, now);
+  carrier.frequency.exponentialRampToValueAtTime(55, now + 0.8);
 
-    const carrier = ctx.createOscillator();
-    carrier.type = 'sawtooth';
-    carrier.frequency.setValueAtTime(110, now);
-    carrier.frequency.exponentialRampToValueAtTime(55, now + 0.8);
+  const modulator = ctx.createOscillator();
+  modulator.type = 'triangle';
+  modulator.frequency.setValueAtTime(30, now);
 
-    const modulator = ctx.createOscillator();
-    modulator.type = 'triangle';
-    modulator.frequency.setValueAtTime(30, now);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.5, now + 0.05);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
 
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.5, now + 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+  const modulationGain = ctx.createGain();
+  modulationGain.gain.setValueAtTime(40, now);
 
-    const modulationGain = ctx.createGain();
-    modulationGain.gain.setValueAtTime(40, now);
+  modulator.connect(modulationGain);
+  modulationGain.connect(carrier.frequency);
+  carrier.connect(gain);
+  gain.connect(ctx.destination);
 
-    modulator.connect(modulationGain);
-    modulationGain.connect(carrier.frequency);
-    carrier.connect(gain);
-    gain.connect(ctx.destination);
+  carrier.start(now);
+  modulator.start(now);
+  carrier.stop(now + 1);
+  modulator.stop(now + 1);
+}
 
-    carrier.start(now);
-    modulator.start(now);
-    carrier.stop(now + 1);
-    modulator.stop(now + 1);
-  }).catch(() => {
-    // ignore resume errors triggered by rapid replays
-  });
+function unlockAudioContext() {
+  const ctx = getAudioContext();
+  if (ctx.state === 'suspended') {
+    ctx.resume().catch(() => {
+      // ignore resume errors triggered by rapid replays
+    });
+  }
 }
 
 function clearTimers() {
@@ -149,6 +153,7 @@ function runFlow(index = 0) {
 }
 
 button.addEventListener('click', () => {
+  unlockAudioContext();
   clearTimers();
   button.disabled = true;
 
