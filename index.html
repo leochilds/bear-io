@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bear I/O Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="scene" aria-label="Bear with a big red button">
+        <div class="bear" role="img" aria-label="A friendly cartoon bear">
+          <span class="bear-decoration" aria-hidden="true"></span>
+          <span class="eye" aria-hidden="true"></span>
+          <span class="nose" aria-hidden="true"></span>
+          <span class="mouth" aria-hidden="true"></span>
+        </div>
+        <button id="bear-button" class="bear-button" type="button" aria-describedby="status">
+          Press Me
+        </button>
+        <p id="status" class="status" aria-live="polite">Press the button to start the program.</p>
+      </section>
+
+      <section class="explanation" aria-label="Program flow visualisation">
+        <div class="pseudocode" aria-live="polite">
+          <h2>Pseudocode</h2>
+          <ol>
+            <li id="pseudo-wait">wait for button press</li>
+            <li id="pseudo-handle">handle button press event</li>
+            <li id="pseudo-flow">update flow diagram step</li>
+            <li id="pseudo-sound">play bear sound</li>
+            <li id="pseudo-done">reset and wait again</li>
+          </ol>
+        </div>
+
+        <div class="flow">
+          <h2>Flow Diagram</h2>
+          <div class="flow-diagram">
+            <div class="flow-node" id="node-wait">
+              <span class="node-title">Input</span>
+              <span class="node-body">Button is pressed</span>
+            </div>
+            <div class="flow-arrow" aria-hidden="true">&#10132;</div>
+            <div class="flow-node" id="node-handle">
+              <span class="node-title">Logic</span>
+              <span class="node-body">Click event handler runs</span>
+            </div>
+            <div class="flow-arrow" aria-hidden="true">&#10132;</div>
+            <div class="flow-node" id="node-flow">
+              <span class="node-title">Process</span>
+              <span class="node-body">Update UI &amp; plan sound</span>
+            </div>
+            <div class="flow-arrow" aria-hidden="true">&#10132;</div>
+            <div class="flow-node" id="node-sound">
+              <span class="node-title">Output</span>
+              <span class="node-body">Bear sound plays</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="script.js" defer></script>
+  </body>
+</html>
