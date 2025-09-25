@@ -2,6 +2,7 @@ const button = document.getElementById('bear-button');
 const statusEl = document.getElementById('status');
 const pseudoItems = Array.from(document.querySelectorAll('.pseudocode li'));
 const flowNodes = Array.from(document.querySelectorAll('.flow-node'));
+const bearMouth = document.querySelector('.bear .mouth');
 
 const STEP_CONFIG = [
   {
@@ -34,6 +35,7 @@ const STEP_CONFIG = [
 let audioCtx;
 let bearBufferPromise;
 let timers = [];
+let mouthTimeoutId;
 
 function getAudioContext() {
   if (!audioCtx) {
@@ -64,11 +66,47 @@ function playBearSound() {
       const source = ctx.createBufferSource();
       source.buffer = buffer;
       source.connect(ctx.destination);
+      startMouthAnimation(buffer?.duration ? buffer.duration * 1000 : undefined);
+      source.onended = stopMouthAnimation;
       source.start();
     })
     .catch(() => {
       // Ignore playback errors so the demo continues smoothly
+      startMouthAnimation(800);
     });
+}
+
+function startMouthAnimation(duration) {
+  if (!bearMouth) {
+    return;
+  }
+
+  if (mouthTimeoutId) {
+    clearTimeout(mouthTimeoutId);
+  }
+
+  bearMouth.classList.add('is-speaking');
+
+  if (Number.isFinite(duration) && duration > 0) {
+    mouthTimeoutId = setTimeout(() => {
+      stopMouthAnimation();
+    }, duration);
+  } else {
+    mouthTimeoutId = null;
+  }
+}
+
+function stopMouthAnimation() {
+  if (!bearMouth) {
+    return;
+  }
+
+  bearMouth.classList.remove('is-speaking');
+
+  if (mouthTimeoutId) {
+    clearTimeout(mouthTimeoutId);
+    mouthTimeoutId = null;
+  }
 }
 
 function unlockAudioContext() {
@@ -83,6 +121,7 @@ function unlockAudioContext() {
 function clearTimers() {
   timers.forEach((id) => clearTimeout(id));
   timers = [];
+  stopMouthAnimation();
 }
 
 function setPseudoState(id, state) {
