@@ -189,17 +189,6 @@ body {
   border-radius: 0 0 70px 70px;
 }
 
-.bear .mouth::before {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 26px;
-  background: #20120b;
-  border-radius: 6px;
-  top: -16px;
-  left: 29px;
-}
-
 .bear-decoration {
   position: absolute;
   inset: 0;
