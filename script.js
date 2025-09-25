@@ -85,6 +85,9 @@ function startMouthAnimation(duration) {
     clearTimeout(mouthTimeoutId);
   }
 
+  bearMouth.classList.remove('is-speaking');
+  // Force a reflow so the animation can retrigger on rapid replays.
+  void bearMouth.offsetWidth;
   bearMouth.classList.add('is-speaking');
 
   if (Number.isFinite(duration) && duration > 0) {
