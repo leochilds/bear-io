@@ -185,6 +185,12 @@ body {
   gap: 1.5rem;
 }
 
+.explanation > * {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
 .pseudocode,
 .flow {
   background: #fefefecc;
