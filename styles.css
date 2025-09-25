@@ -56,76 +56,137 @@ body {
 }
 
 .bear {
-  width: 200px;
-  height: 180px;
+  width: 220px;
+  height: 210px;
   position: relative;
-  background: #6f4d2d;
-  border-radius: 140px 140px 110px 110px;
-  box-shadow: inset -6px -12px 0 rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  background: radial-gradient(circle at 40% 30%, #805732 0%, #5d3919 70%, #4d2f14 100%);
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: inset 12px 18px 0 rgba(255, 255, 255, 0.08), inset -16px -22px 0 rgba(0, 0, 0, 0.22);
+  overflow: visible;
 }
 
-.bear::before,
-.bear::after {
+.bear-ear {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #8b6238 0%, #5a3716 85%);
+  top: -26px;
+  z-index: 0;
+}
+
+.bear-ear::after {
   content: '';
   position: absolute;
-  background: #6f4d2d;
-}
-
-.bear::before {
-  width: 70px;
-  height: 70px;
+  inset: 16px;
   border-radius: 50%;
-  top: -30px;
-  left: 15px;
-  box-shadow: 100px 0 0 0 #6f4d2d;
+  background: radial-gradient(circle at 40% 40%, #e5bf8c 0%, #c89761 90%);
 }
 
-.bear::after {
-  width: 70px;
-  height: 60px;
-  border-radius: 45px;
-  top: 45px;
-  left: 65px;
-  background: #f5d6a3;
-  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.1);
-  z-index: 2;
+.bear-ear--left {
+  left: 28px;
+}
+
+.bear-ear--right {
+  right: 28px;
+}
+
+.bear-decoration,
+.bear .eye,
+.bear .nose,
+.bear .mouth,
+.bear .snout {
+  position: absolute;
+  display: block;
 }
 
 .bear .eye,
 .bear .nose,
 .bear .mouth {
-  position: absolute;
-  display: block;
   z-index: 3;
 }
 
-.bear .eye {
-  width: 12px;
-  height: 16px;
-  background: #111;
+.bear .snout {
+  width: 132px;
+  height: 104px;
+  top: 88px;
+  left: 44px;
+  border-radius: 58% 58% 50% 50%;
+  background: radial-gradient(circle at 50% 35%, #f9dfba 0%, #e4b775 90%);
+  box-shadow: inset 0 -14px 0 rgba(0, 0, 0, 0.12);
+  z-index: 2;
+}
+
+.bear .snout::after {
+  content: '';
+  position: absolute;
+  width: 102px;
+  height: 52px;
+  left: 15px;
+  bottom: 10px;
   border-radius: 50%;
-  top: 50px;
-  left: 62px;
-  box-shadow: 62px 0 0 0 #111;
+  background: rgba(0, 0, 0, 0.08);
+  filter: blur(1px);
+  opacity: 0.4;
+}
+
+.bear .eye {
+  width: 18px;
+  height: 24px;
+  background: radial-gradient(circle at 40% 35%, #1c1c1c 0%, #050505 90%);
+  border-radius: 50%;
+  top: 82px;
+}
+
+.bear .eye::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  top: 5px;
+  left: 5px;
+}
+
+.bear .eye--left {
+  left: 68px;
+  transform: rotate(-6deg);
+}
+
+.bear .eye--right {
+  right: 68px;
+  transform: rotate(6deg);
 }
 
 .bear .nose {
-  width: 24px;
-  height: 16px;
-  background: #111;
-  border-radius: 50% 50% 70% 70%;
-  top: 74px;
-  left: 88px;
+  width: 46px;
+  height: 32px;
+  top: 112px;
+  left: 87px;
+  border-radius: 50% 50% 60% 60%;
+  background: radial-gradient(circle at 50% 30%, #2b2826 0%, #0d0d0d 80%);
+  box-shadow: inset 0 -4px 0 rgba(255, 255, 255, 0.08);
+}
+
+.bear .nose::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  top: 6px;
+  left: 15px;
 }
 
 .bear .mouth {
-  width: 40px;
-  height: 24px;
-  border-bottom: 5px solid #111;
+  width: 66px;
+  height: 48px;
+  top: 142px;
+  left: 77px;
+  border-bottom: 6px solid #20120b;
   border-radius: 0 0 70px 70px;
-  top: 94px;
-  left: 78px;
 }
 
 .bear-decoration {
@@ -140,22 +201,24 @@ body {
 .bear-decoration::after {
   content: '';
   position: absolute;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.16);
   border-radius: 50%;
 }
 
 .bear-decoration::before {
-  width: 110px;
-  height: 110px;
-  top: -40px;
-  left: 120px;
+  width: 96px;
+  height: 96px;
+  top: 14px;
+  right: 22px;
+  filter: blur(0.5px);
 }
 
 .bear-decoration::after {
-  width: 80px;
-  height: 80px;
-  bottom: -20px;
-  right: 100px;
+  width: 110px;
+  height: 110px;
+  bottom: -34px;
+  left: -26px;
+  opacity: 0.6;
 }
 
 .bear-button {
